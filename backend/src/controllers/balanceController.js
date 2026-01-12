@@ -4,7 +4,6 @@ export const createBalance = async (req, res) => {
   const b = await Balance.create(req.body);
   res.status(201).json(b);
 };
-
 export const getBalances = async (req, res) => {
   const list = await Balance.find();
   res.json(list);
