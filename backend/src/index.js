@@ -2,13 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import path from 'path';
 
 import usersRoute from './routes/usersRoute.js';
 import betsRoute from './routes/betsRoute.js';
 import depositsRoute from './routes/depositsRoute.js';
 import withdrawalsRoute from './routes/withdrawalsRoute.js';
 import balancesRoute from './routes/balancesRoute.js';
+import authRoute from './routes/authRouter.js';
 
 dotenv.config();
 
@@ -28,8 +28,7 @@ app.use('/api/bets', betsRoute);
 app.use('/api/deposits', depositsRoute);
 app.use('/api/withdrawals', withdrawalsRoute);
 app.use('/api/balances', balancesRoute);
-
-app.use('/uploads', express.static(path.join(path.resolve(), 'uploads')));
+app.use('/api/auth', authRoute);
 
 const mongoUri =  process.env.MONGO_URI ;
 
