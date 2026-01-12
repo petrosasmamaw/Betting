@@ -4,11 +4,11 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 
-import usersRouter from './routes/users.js';
-import betsRouter from './routes/bets.js';
-import depositsRouter from './routes/deposits.js';
-import withdrawalsRouter from './routes/withdrawals.js';
-import balancesRouter from './routes/balances.js';
+import usersRoute from './routes/usersRoute.js';
+import betsRoute from './routes/betsRoute.js';
+import depositsRoute from './routes/depositsRoute.js';
+import withdrawalsRoute from './routes/withdrawalsRoute.js';
+import balancesRoute from './routes/balancesRoute.js';
 
 dotenv.config();
 
@@ -23,11 +23,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/users', usersRouter);
-app.use('/api/bets', betsRouter);
-app.use('/api/deposits', depositsRouter);
-app.use('/api/withdrawals', withdrawalsRouter);
-app.use('/api/balances', balancesRouter);
+app.use('/api/users', usersRoute);
+app.use('/api/bets', betsRoute);
+app.use('/api/deposits', depositsRoute);
+app.use('/api/withdrawals', withdrawalsRoute);
+app.use('/api/balances', balancesRoute);
 
 app.use('/uploads', express.static(path.join(path.resolve(), 'uploads')));
 
