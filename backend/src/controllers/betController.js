@@ -20,7 +20,7 @@ export const getBetById = async (req, res) => {
   const bet = await Bet.findById(req.params.id);
   if (!bet) return res.status(404).json({ message: "Bet not found" });
   res.json(bet);
-};
+}; 
 
 export const updateBet = async (req, res) => {
   const bet = await Bet.findByIdAndUpdate(req.params.id, req.body, { new: true });
