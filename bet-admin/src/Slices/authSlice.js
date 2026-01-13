@@ -61,19 +61,23 @@ const slice = createSlice({
     builder
       .addCase(register.pending, state => { state.loading = true; state.error = null; })
       .addCase(register.fulfilled, (state, action) => { state.loading = false; state.message = action.payload.message; })
-      .addCase(register.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(register.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
       .addCase(login.pending, state => { state.loading = true; state.error = null; })
       .addCase(login.fulfilled, (state, action) => { state.loading = false; state.user = action.payload.user; })
-      .addCase(login.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(login.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(logout.fulfilled, state => { state.user = null; state.message = null; })
+      .addCase(logout.pending, state => { state.loading = true; state.error = null; })
+      .addCase(logout.fulfilled, state => { state.loading = false; state.user = null; state.message = null; })
+      .addCase(logout.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(getSession.pending, state => { state.loading = true; })
+      .addCase(getSession.pending, state => { state.loading = true; state.error = null; })
       .addCase(getSession.fulfilled, (state, action) => { state.loading = false; state.user = action.payload.user; })
-      .addCase(getSession.rejected, state => { state.loading = false; state.user = null; })
+      .addCase(getSession.rejected, (state, action) => { state.loading = false; state.user = null; state.error = action.payload || action.error?.message; })
 
-      .addCase(forgotPassword.fulfilled, (state, action) => { state.message = action.payload.message; });
+      .addCase(forgotPassword.pending, state => { state.loading = true; state.error = null; })
+      .addCase(forgotPassword.fulfilled, (state, action) => { state.loading = false; state.message = action.payload.message; })
+      .addCase(forgotPassword.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; });
   },
 });
 

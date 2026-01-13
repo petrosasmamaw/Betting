@@ -55,22 +55,29 @@ const slice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchUsers.pending, state => { state.loading = true; })
+      .addCase(fetchUsers.pending, state => { state.loading = true; state.error = null; })
       .addCase(fetchUsers.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
-      .addCase(fetchUsers.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(fetchUsers.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(fetchUserBySupabaseId.fulfilled, (state, action) => { state.items = action.payload ? [action.payload] : []; })
+      .addCase(fetchUserBySupabaseId.pending, state => { state.loading = true; state.error = null; })
+      .addCase(fetchUserBySupabaseId.fulfilled, (state, action) => { state.loading = false; state.items = action.payload ? [action.payload] : []; })
+      .addCase(fetchUserBySupabaseId.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(createUser.fulfilled, (state, action) => { state.items.push(action.payload); })
+      .addCase(createUser.pending, state => { state.loading = true; state.error = null; })
+      .addCase(createUser.fulfilled, (state, action) => { state.loading = false; state.items.push(action.payload); })
+      .addCase(createUser.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
+      .addCase(updateUser.pending, state => { state.loading = true; state.error = null; })
       .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
         const idx = state.items.findIndex(i => i._id === action.payload._id || i.id === action.payload.id);
         if (idx !== -1) state.items[idx] = action.payload;
       })
+      .addCase(updateUser.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(deleteUser.fulfilled, (state, action) => {
-        state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload);
-      });
+      .addCase(deleteUser.pending, state => { state.loading = true; state.error = null; })
+      .addCase(deleteUser.fulfilled, (state, action) => { state.loading = false; state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload); })
+      .addCase(deleteUser.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; });
   },
 });
 

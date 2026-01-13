@@ -55,22 +55,29 @@ const slice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchBets.pending, state => { state.loading = true; })
+      .addCase(fetchBets.pending, state => { state.loading = true; state.error = null; })
       .addCase(fetchBets.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
-      .addCase(fetchBets.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(fetchBets.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(fetchBetsBySupabaseId.fulfilled, (state, action) => { state.items = action.payload; })
+      .addCase(fetchBetsBySupabaseId.pending, state => { state.loading = true; state.error = null; })
+      .addCase(fetchBetsBySupabaseId.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
+      .addCase(fetchBetsBySupabaseId.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(createBet.fulfilled, (state, action) => { state.items.push(action.payload); })
+      .addCase(createBet.pending, state => { state.loading = true; state.error = null; })
+      .addCase(createBet.fulfilled, (state, action) => { state.loading = false; state.items.push(action.payload); })
+      .addCase(createBet.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
+      .addCase(updateBet.pending, state => { state.loading = true; state.error = null; })
       .addCase(updateBet.fulfilled, (state, action) => {
+        state.loading = false;
         const idx = state.items.findIndex(i => i._id === action.payload._id || i.id === action.payload.id);
         if (idx !== -1) state.items[idx] = action.payload;
       })
+      .addCase(updateBet.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(deleteBet.fulfilled, (state, action) => {
-        state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload);
-      });
+      .addCase(deleteBet.pending, state => { state.loading = true; state.error = null; })
+      .addCase(deleteBet.fulfilled, (state, action) => { state.loading = false; state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload); })
+      .addCase(deleteBet.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; });
   },
 });
 

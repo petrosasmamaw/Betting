@@ -55,22 +55,29 @@ const slice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchDeposits.pending, state => { state.loading = true; })
+      .addCase(fetchDeposits.pending, state => { state.loading = true; state.error = null; })
       .addCase(fetchDeposits.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
-      .addCase(fetchDeposits.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(fetchDeposits.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(fetchDepositsBySupabaseId.fulfilled, (state, action) => { state.items = action.payload; })
+      .addCase(fetchDepositsBySupabaseId.pending, state => { state.loading = true; state.error = null; })
+      .addCase(fetchDepositsBySupabaseId.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
+      .addCase(fetchDepositsBySupabaseId.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(createDeposit.fulfilled, (state, action) => { state.items.push(action.payload); })
+      .addCase(createDeposit.pending, state => { state.loading = true; state.error = null; })
+      .addCase(createDeposit.fulfilled, (state, action) => { state.loading = false; state.items.push(action.payload); })
+      .addCase(createDeposit.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
+      .addCase(updateDeposit.pending, state => { state.loading = true; state.error = null; })
       .addCase(updateDeposit.fulfilled, (state, action) => {
+        state.loading = false;
         const idx = state.items.findIndex(i => i._id === action.payload._id || i.id === action.payload.id);
         if (idx !== -1) state.items[idx] = action.payload;
       })
+      .addCase(updateDeposit.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(deleteDeposit.fulfilled, (state, action) => {
-        state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload);
-      });
+      .addCase(deleteDeposit.pending, state => { state.loading = true; state.error = null; })
+      .addCase(deleteDeposit.fulfilled, (state, action) => { state.loading = false; state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload); })
+      .addCase(deleteDeposit.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; });
   },
 });
 

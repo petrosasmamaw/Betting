@@ -55,22 +55,29 @@ const slice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchWithdrawals.pending, state => { state.loading = true; })
+      .addCase(fetchWithdrawals.pending, state => { state.loading = true; state.error = null; })
       .addCase(fetchWithdrawals.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
-      .addCase(fetchWithdrawals.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(fetchWithdrawals.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(fetchWithdrawalsBySupabaseId.fulfilled, (state, action) => { state.items = action.payload; })
+      .addCase(fetchWithdrawalsBySupabaseId.pending, state => { state.loading = true; state.error = null; })
+      .addCase(fetchWithdrawalsBySupabaseId.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
+      .addCase(fetchWithdrawalsBySupabaseId.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(createWithdrawal.fulfilled, (state, action) => { state.items.push(action.payload); })
+      .addCase(createWithdrawal.pending, state => { state.loading = true; state.error = null; })
+      .addCase(createWithdrawal.fulfilled, (state, action) => { state.loading = false; state.items.push(action.payload); })
+      .addCase(createWithdrawal.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
+      .addCase(updateWithdrawal.pending, state => { state.loading = true; state.error = null; })
       .addCase(updateWithdrawal.fulfilled, (state, action) => {
+        state.loading = false;
         const idx = state.items.findIndex(i => i._id === action.payload._id || i.id === action.payload.id);
         if (idx !== -1) state.items[idx] = action.payload;
       })
+      .addCase(updateWithdrawal.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(deleteWithdrawal.fulfilled, (state, action) => {
-        state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload);
-      });
+      .addCase(deleteWithdrawal.pending, state => { state.loading = true; state.error = null; })
+      .addCase(deleteWithdrawal.fulfilled, (state, action) => { state.loading = false; state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload); })
+      .addCase(deleteWithdrawal.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; });
   },
 });
 

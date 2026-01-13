@@ -55,22 +55,29 @@ const slice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchBalances.pending, state => { state.loading = true; })
+      .addCase(fetchBalances.pending, state => { state.loading = true; state.error = null; })
       .addCase(fetchBalances.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
-      .addCase(fetchBalances.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      .addCase(fetchBalances.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(fetchBalancesBySupabaseId.fulfilled, (state, action) => { state.items = action.payload; })
+      .addCase(fetchBalancesBySupabaseId.pending, state => { state.loading = true; state.error = null; })
+      .addCase(fetchBalancesBySupabaseId.fulfilled, (state, action) => { state.loading = false; state.items = action.payload; })
+      .addCase(fetchBalancesBySupabaseId.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(createBalance.fulfilled, (state, action) => { state.items.push(action.payload); })
+      .addCase(createBalance.pending, state => { state.loading = true; state.error = null; })
+      .addCase(createBalance.fulfilled, (state, action) => { state.loading = false; state.items.push(action.payload); })
+      .addCase(createBalance.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
+      .addCase(updateBalance.pending, state => { state.loading = true; state.error = null; })
       .addCase(updateBalance.fulfilled, (state, action) => {
+        state.loading = false;
         const idx = state.items.findIndex(i => i._id === action.payload._id || i.id === action.payload.id);
         if (idx !== -1) state.items[idx] = action.payload;
       })
+      .addCase(updateBalance.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; })
 
-      .addCase(deleteBalance.fulfilled, (state, action) => {
-        state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload);
-      });
+      .addCase(deleteBalance.pending, state => { state.loading = true; state.error = null; })
+      .addCase(deleteBalance.fulfilled, (state, action) => { state.loading = false; state.items = state.items.filter(i => i._id !== action.payload && i.id !== action.payload); })
+      .addCase(deleteBalance.rejected, (state, action) => { state.loading = false; state.error = action.payload || action.error?.message; });
   },
 });
 
