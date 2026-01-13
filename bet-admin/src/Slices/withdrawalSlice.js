@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from './api';
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:5000/api'; 
+const WITHDRAWALS_URL = `${BASE_URL}/withdrawals`;
 
 export const fetchWithdrawals = createAsyncThunk('withdrawals/fetchAll', async (_, thunkAPI) => {
   try {
-    const res = await api.get('/withdrawals');
+    const res = await axios.get(WITHDRAWALS_URL);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -12,7 +15,7 @@ export const fetchWithdrawals = createAsyncThunk('withdrawals/fetchAll', async (
 
 export const fetchWithdrawalsBySupabaseId = createAsyncThunk('withdrawals/fetchBySupabase', async (supabaseId, thunkAPI) => {
   try {
-    const res = await api.get(`/withdrawals/supabase/${supabaseId}`);
+    const res = await axios.get(`${WITHDRAWALS_URL}/supabase/${supabaseId}`);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -21,7 +24,7 @@ export const fetchWithdrawalsBySupabaseId = createAsyncThunk('withdrawals/fetchB
 
 export const createWithdrawal = createAsyncThunk('withdrawals/create', async (payload, thunkAPI) => {
   try {
-    const res = await api.post('/withdrawals', payload);
+    const res = await axios.post(WITHDRAWALS_URL, payload);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -30,7 +33,7 @@ export const createWithdrawal = createAsyncThunk('withdrawals/create', async (pa
 
 export const updateWithdrawal = createAsyncThunk('withdrawals/update', async ({ id, data }, thunkAPI) => {
   try {
-    const res = await api.put(`/withdrawals/${id}`, data);
+    const res = await axios.put(`${WITHDRAWALS_URL}/${id}`, data);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -39,7 +42,7 @@ export const updateWithdrawal = createAsyncThunk('withdrawals/update', async ({ 
 
 export const deleteWithdrawal = createAsyncThunk('withdrawals/delete', async (id, thunkAPI) => {
   try {
-    await api.delete(`/withdrawals/${id}`);
+    await axios.delete(`${WITHDRAWALS_URL}/${id}`);
     return id;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);

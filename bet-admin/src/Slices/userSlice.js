@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from './api';
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:5000/api'; 
+const USERS_URL = `${BASE_URL}/users`;
 
 export const fetchUsers = createAsyncThunk('users/fetchAll', async (_, thunkAPI) => {
   try {
-    const res = await api.get('/users');
+    const res = await axios.get(USERS_URL);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -12,7 +15,7 @@ export const fetchUsers = createAsyncThunk('users/fetchAll', async (_, thunkAPI)
 
 export const fetchUserBySupabaseId = createAsyncThunk('users/fetchBySupabase', async (supabaseId, thunkAPI) => {
   try {
-    const res = await api.get(`/users/supabase/${supabaseId}`);
+    const res = await axios.get(`${USERS_URL}/supabase/${supabaseId}`);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -21,7 +24,7 @@ export const fetchUserBySupabaseId = createAsyncThunk('users/fetchBySupabase', a
 
 export const createUser = createAsyncThunk('users/create', async (payload, thunkAPI) => {
   try {
-    const res = await api.post('/users', payload);
+    const res = await axios.post(USERS_URL, payload);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -30,7 +33,7 @@ export const createUser = createAsyncThunk('users/create', async (payload, thunk
 
 export const updateUser = createAsyncThunk('users/update', async ({ id, data }, thunkAPI) => {
   try {
-    const res = await api.put(`/users/${id}`, data);
+    const res = await axios.put(`${USERS_URL}/${id}`, data);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -39,7 +42,7 @@ export const updateUser = createAsyncThunk('users/update', async ({ id, data }, 
 
 export const deleteUser = createAsyncThunk('users/delete', async (id, thunkAPI) => {
   try {
-    await api.delete(`/users/${id}`);
+    await axios.delete(`${USERS_URL}/${id}`);
     return id;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);

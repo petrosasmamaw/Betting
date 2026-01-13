@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from './api';
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:5000/api'; 
+const AUTH_URL = `${BASE_URL}/auth`;
 
 export const register = createAsyncThunk('auth/register', async (payload, thunkAPI) => {
   try {
-    const res = await api.post('/auth/register', payload);
+    const res = await axios.post(`${AUTH_URL}/register`, payload);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -12,7 +15,7 @@ export const register = createAsyncThunk('auth/register', async (payload, thunkA
 
 export const login = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
   try {
-    const res = await api.post('/auth/login', payload);
+    const res = await axios.post(`${AUTH_URL}/login`, payload);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -21,7 +24,7 @@ export const login = createAsyncThunk('auth/login', async (payload, thunkAPI) =>
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    const res = await api.post('/auth/logout');
+    const res = await axios.post(`${AUTH_URL}/logout`);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -30,7 +33,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 
 export const getSession = createAsyncThunk('auth/session', async (_, thunkAPI) => {
   try {
-    const res = await api.get('/auth/session');
+    const res = await axios.get(`${AUTH_URL}/session`);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -39,7 +42,7 @@ export const getSession = createAsyncThunk('auth/session', async (_, thunkAPI) =
 
 export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (payload, thunkAPI) => {
   try {
-    const res = await api.post('/auth/forgot-password', payload);
+    const res = await axios.post(`${AUTH_URL}/forgot-password`, payload);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);

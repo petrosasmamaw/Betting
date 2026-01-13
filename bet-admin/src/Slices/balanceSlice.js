@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from './api';
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:5000/api'; 
+const BALANCE_URL = `${BASE_URL}/balances`;
 
 export const fetchBalances = createAsyncThunk('balances/fetchAll', async (_, thunkAPI) => {
   try {
-    const res = await api.get('/balances');
+    const res = await axios.get(BALANCE_URL);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -12,7 +15,7 @@ export const fetchBalances = createAsyncThunk('balances/fetchAll', async (_, thu
 
 export const fetchBalancesBySupabaseId = createAsyncThunk('balances/fetchBySupabase', async (supabaseId, thunkAPI) => {
   try {
-    const res = await api.get(`/balances/supabase/${supabaseId}`);
+    const res = await axios.get(`${BALANCE_URL}/supabase/${supabaseId}`);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -21,7 +24,7 @@ export const fetchBalancesBySupabaseId = createAsyncThunk('balances/fetchBySupab
 
 export const createBalance = createAsyncThunk('balances/create', async (payload, thunkAPI) => {
   try {
-    const res = await api.post('/balances', payload);
+    const res = await axios.post(BALANCE_URL, payload);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -30,7 +33,7 @@ export const createBalance = createAsyncThunk('balances/create', async (payload,
 
 export const updateBalance = createAsyncThunk('balances/update', async ({ id, data }, thunkAPI) => {
   try {
-    const res = await api.put(`/balances/${id}`, data);
+    const res = await axios.put(`${BALANCE_URL}/${id}`, data);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -39,7 +42,7 @@ export const updateBalance = createAsyncThunk('balances/update', async ({ id, da
 
 export const deleteBalance = createAsyncThunk('balances/delete', async (id, thunkAPI) => {
   try {
-    await api.delete(`/balances/${id}`);
+    await axios.delete(`${BALANCE_URL}/${id}`);
     return id;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);

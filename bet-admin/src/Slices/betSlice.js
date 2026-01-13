@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from './api';
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:5000/api'; 
+const BETS_URL = `${BASE_URL}/bets`;
 
 export const fetchBets = createAsyncThunk('bets/fetchAll', async (_, thunkAPI) => {
   try {
-    const res = await api.get('/bets');
+    const res = await axios.get(BETS_URL);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -12,7 +15,7 @@ export const fetchBets = createAsyncThunk('bets/fetchAll', async (_, thunkAPI) =
 
 export const fetchBetsBySupabaseId = createAsyncThunk('bets/fetchBySupabase', async (supabaseId, thunkAPI) => {
   try {
-    const res = await api.get(`/bets/supabase/${supabaseId}`);
+    const res = await axios.get(`${BETS_URL}/supabase/${supabaseId}`);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -21,7 +24,7 @@ export const fetchBetsBySupabaseId = createAsyncThunk('bets/fetchBySupabase', as
 
 export const createBet = createAsyncThunk('bets/create', async (payload, thunkAPI) => {
   try {
-    const res = await api.post('/bets', payload);
+    const res = await axios.post(BETS_URL, payload);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -30,7 +33,7 @@ export const createBet = createAsyncThunk('bets/create', async (payload, thunkAP
 
 export const updateBet = createAsyncThunk('bets/update', async ({ id, data }, thunkAPI) => {
   try {
-    const res = await api.put(`/bets/${id}`, data);
+    const res = await axios.put(`${BETS_URL}/${id}`, data);
     return res.data;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
@@ -39,7 +42,7 @@ export const updateBet = createAsyncThunk('bets/update', async ({ id, data }, th
 
 export const deleteBet = createAsyncThunk('bets/delete', async (id, thunkAPI) => {
   try {
-    await api.delete(`/bets/${id}`);
+    await axios.delete(`${BETS_URL}/${id}`);
     return id;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response?.data || e.message);
