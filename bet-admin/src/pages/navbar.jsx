@@ -20,6 +20,7 @@ const Navbar = ({ user }) => {
           <>
             <Link to="/dashboard" className="nav-link">Dashboard</Link>
             <Link to="/bets" className="nav-link">Bets</Link>
+            <Link to="/deposit" className="nav-link">Deposit</Link>
             <Link to="/profile" className="nav-link">Profile</Link>
             <Link to="/withdraw" className="nav-link">Withdraw</Link>
             <button onClick={handleLogout} className="nav-link btn-logout">Logout</button>

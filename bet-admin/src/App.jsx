@@ -8,6 +8,7 @@ import Login from './pages/login';
 import Profile from './pages/profile';
 import Register from './pages/register';
 import Withdraw from './pages/withdraw';
+import Deposit from './pages/deposit';
 import Navbar from './pages/navbar';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
               <Route path="/" element={<Dashboard user={user} />} />
               <Route path="/dashboard" element={<Dashboard user={user} />} />
               <Route path="/bets" element={<Bets user={user} />} />
+              <Route path="/deposit" element={<Deposit user={user} />} />
               <Route path="/profile" element={<Profile user={user} />} />
               <Route path="/withdraw" element={<Withdraw user={user} />} />
             </>
