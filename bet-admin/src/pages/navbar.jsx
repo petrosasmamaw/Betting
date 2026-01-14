@@ -1,11 +1,38 @@
-import React from 'react'
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../Slices/authSlice';
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await dispatch(logout());
+    navigate('/login');
+  };
+
   return (
-    <div>
-      <p>Navbar Page</p>
-    </div>
-  )
-}
+    <nav className="navbar">
+      <div className="navbar-brand">Bet Admin</div>
+      <div className="navbar-links">
+        {user ? (
+          <>
+            <Link to="/dashboard" className="nav-link">Dashboard</Link>
+            <Link to="/bets" className="nav-link">Bets</Link>
+            <Link to="/profile" className="nav-link">Profile</Link>
+            <Link to="/withdraw" className="nav-link">Withdraw</Link>
+            <button onClick={handleLogout} className="nav-link btn-logout">Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="nav-link">Login</Link>
+            <Link to="/register" className="nav-link">Register</Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;

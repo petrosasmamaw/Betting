@@ -10,7 +10,7 @@ export default function Bets({ user }) {
 
   return (
     <div className="page">
-      <h2>Bets</h2>
+      <h1>Bets</h1>
       {bets.loading && <div>Loading...</div>}
       <ul className="list">
         {bets.items.map(b => (
@@ -20,5 +20,4 @@ export default function Bets({ user }) {
     </div>
   );
 }
-import React from 'react'
 

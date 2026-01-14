@@ -2,8 +2,9 @@ import React from 'react'
 
 const Dashboard = () => {
   return (
-    <div>
-      <p>Dashboard Page</p>
+    <div className="page">
+      <h1>Dashboard</h1>
+      <p>Welcome to the Bet Admin Dashboard. Manage your betting platform here.</p>
     </div>
   )
 }
