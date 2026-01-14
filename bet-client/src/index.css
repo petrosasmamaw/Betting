@@ -218,3 +218,38 @@ body {
   font-weight: bold;
   margin-bottom: 1rem;
 }
+
+.create-bet {
+  margin-bottom: 2rem;
+}
+
+.bet-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.bet-form .form-group:nth-child(1) {
+  grid-column: span 2;
+}
+
+.bets-list {
+  margin-top: 2rem;
+}
+
+.bets-list h2 {
+  margin-bottom: 1rem;
+}
+
+.bet-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 1rem;
+}
+
+.bet-item p {
+  margin: 0.5rem 0;
+  color: #fff;
+}

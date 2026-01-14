@@ -1,22 +1,87 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBets } from '../Slices/betSlice';
+import { fetchBets, updateBet } from '../Slices/betSlice';
 
 export default function Bets({ user }) {
   const dispatch = useDispatch();
-  const bets = useSelector(s => s.bets);
+  const { items: bets, loading, error } = useSelector(s => s.bets);
+  const [editing, setEditing] = useState(null);
+  const [editData, setEditData] = useState({ possibleWin: '', isAccepted: false, status: 'pending' });
 
   useEffect(() => { dispatch(fetchBets()); }, [dispatch]);
 
+  const handleEdit = (bet) => {
+    setEditing(bet._id || bet.id);
+    setEditData({
+      possibleWin: bet.possibleWin || '',
+      isAccepted: bet.isAccepted || false,
+      status: bet.status || 'pending'
+    });
+  };
+
+  const handleSave = (id) => {
+    dispatch(updateBet({ id, data: editData }));
+    setEditing(null);
+  };
+
+  const handleCancel = () => {
+    setEditing(null);
+  };
+
   return (
     <div className="page">
-      <h1>Bets</h1>
-      {bets.loading && <div>Loading...</div>}
-      <ul className="list">
-        {bets.items.map(b => (
-          <li key={b._id || b.id}>{b.title || b._id}</li>
+      <h1>All Bets</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p className="error">{typeof error === 'string' ? error : error.message || 'Error'}</p>}
+      <div className="bets-list">
+        {bets.map(bet => (
+          <div key={bet._id || bet.id} className="bet-item">
+            <div className="bet-info">
+              <p><strong>Prediction:</strong> {bet.prediction}</p>
+              <p><strong>Amount:</strong> ${bet.amount}</p>
+              <p><strong>Possible Win:</strong> ${bet.possibleWin}</p>
+              <p><strong>Accepted:</strong> {bet.isAccepted ? 'Yes' : 'No'}</p>
+              <p><strong>Status:</strong> {bet.status}</p>
+              <p><strong>User ID:</strong> {bet.supabaseId}</p>
+            </div>
+            {editing === (bet._id || bet.id) ? (
+              <div className="edit-form">
+                <label>
+                  Possible Win:
+                  <input
+                    type="number"
+                    value={editData.possibleWin}
+                    onChange={(e) => setEditData({ ...editData, possibleWin: e.target.value })}
+                  />
+                </label>
+                <label>
+                  Accepted:
+                  <input
+                    type="checkbox"
+                    checked={editData.isAccepted}
+                    onChange={(e) => setEditData({ ...editData, isAccepted: e.target.checked })}
+                  />
+                </label>
+                <label>
+                  Status:
+                  <select
+                    value={editData.status}
+                    onChange={(e) => setEditData({ ...editData, status: e.target.value })}
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="win">Win</option>
+                    <option value="loss">Loss</option>
+                  </select>
+                </label>
+                <button onClick={() => handleSave(bet._id || bet.id)} className="btn">Save</button>
+                <button onClick={handleCancel} className="btn">Cancel</button>
+              </div>
+            ) : (
+              <button onClick={() => handleEdit(bet)} className="btn">Edit</button>
+            )}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
