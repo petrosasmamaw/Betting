@@ -206,3 +206,15 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.error {
+  color: #ff6b35;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.success {
+  color: #4caf50;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
