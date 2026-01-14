@@ -6,6 +6,14 @@ const WithdrawalSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    userName: {
+      type: String,
+      required: true,
+    },
+     method: {
+      type: String,
+      required: true,
+    },
 
     phoneNo: {
       type: Number,
@@ -14,11 +22,6 @@ const WithdrawalSchema = new mongoose.Schema(
     
     amount: {
       type: Number,
-      required: true,
-    },
-
-    method: {
-      type: String,
       required: true,
     },
 

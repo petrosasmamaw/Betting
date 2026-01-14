@@ -5,7 +5,7 @@ import userReducer from "./Slices/userSlice";
 import depositReducer from "./Slices/depositSlice";
 import betReducer from "./Slices/betSlice";
 import withdrawalReducer from "./Slices/withdrawalSlice";
-import transactionReducer from "./Slices/transactionSlice";
+import balanceReducer from "./Slices/balanceSlice";
 
 const store = configureStore({
     reducer: {
@@ -14,7 +14,7 @@ const store = configureStore({
         deposits: depositReducer,
         bets: betReducer,
         withdrawals: withdrawalReducer,
-        transactions: transactionReducer,
+        balances: balanceReducer,
     },
 });
     
