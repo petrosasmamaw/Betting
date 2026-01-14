@@ -257,7 +257,15 @@ body {
   border-radius: 4px;
 }
 
-.edit-form .btn {
-  margin-top: 0.5rem;
-  align-self: flex-start;
+.bet-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.delete-btn {
+  background: linear-gradient(45deg, #ff4444, #cc0000);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(45deg, #cc0000, #aa0000);
 }

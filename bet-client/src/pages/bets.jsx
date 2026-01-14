@@ -8,7 +8,6 @@ export default function Bets({ user }) {
   const [formData, setFormData] = useState({
     prediction: '',
     amount: '',
-    possibleWin: 0,
     isAccepted: false,
     status: 'pending'
   });
@@ -34,13 +33,12 @@ export default function Bets({ user }) {
         ...formData,
         supabaseId: user.id,
         amount: parseFloat(formData.amount),
-        possibleWin: parseFloat(formData.possibleWin)
+        possibleWin: 0
       };
       dispatch(createBet(payload));
       setFormData({
         prediction: '',
         amount: '',
-        possibleWin: 0,
         isAccepted: false,
         status: 'pending'
       });
