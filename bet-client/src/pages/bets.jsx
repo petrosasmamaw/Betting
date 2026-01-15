@@ -87,16 +87,18 @@ export default function Bets({ user }) {
         <h2>Your Bets</h2>
         {loading && <p>Loading...</p>}
         {bets.length === 0 && !loading && <p>No bets found.</p>}
-        {bets.map(bet => (
-          <div key={bet._id || bet.id} className="bet-item">
-            <p><strong>Prediction:</strong> {bet.prediction}</p>
-            <p><strong>Amount:</strong> ${bet.amount}</p>
-            <p><strong>Possible Win:</strong> ${bet.possibleWin}</p>
-            <p><strong>Accepted:</strong> {bet.isAccepted ? 'Yes' : 'No'}</p>
-            <p><strong>Status:</strong> {bet.status}</p>
-            <p><strong>Created:</strong> {new Date(bet.createdAt).toLocaleDateString()}</p>
-          </div>
-        ))}
+        <div className="bets-grid">
+          {bets.map(bet => (
+            <div key={bet._id || bet.id} className="bet-item">
+              <p><strong>Prediction:</strong> {bet.prediction}</p>
+              <p><strong>Amount:</strong> ${bet.amount}</p>
+              <p><strong>Possible Win:</strong> ${bet.possibleWin}</p>
+              <p><strong>Accepted:</strong> {bet.isAccepted ? 'Yes' : 'No'}</p>
+              <p><strong>Status:</strong> {bet.status}</p>
+              <p><strong>Created:</strong> {new Date(bet.createdAt).toLocaleDateString()}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
