@@ -250,6 +250,45 @@ body {
   font-size: 0.9rem;
 }
 
+.profiles-table {
+  overflow-x: auto;
+}
+
+.profiles-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.profiles-table th,
+.profiles-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profiles-table th {
+  background: rgba(0, 123, 255, 0.3);
+  font-weight: bold;
+  color: #fff;
+}
+
+.profiles-table td {
+  color: #fff;
+}
+
+.blocked {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.active {
+  color: #28a745;
+  font-weight: bold;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .navbar {
