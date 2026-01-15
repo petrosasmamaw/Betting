@@ -82,9 +82,9 @@ const Withdraw = ({ user }) => {
             required
           >
             <option value="">Select method</option>
-            <option value="bank">Bank Transfer</option>
+            <option value="bank">CBE Transfer</option>
             <option value="card">TeleBirr</option>
-            <option value="paypal">PayPal</option>
+            <option value="paypal">BOA</option>
             <option value="crypto">Cryptocurrency</option>
           </select>
         </div>
