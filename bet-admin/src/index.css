@@ -24,7 +24,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, #ff6b35 0%, #f7931e 100%);
+  background: linear-gradient(90deg, #007bff 0%, #00d4ff 100%);
   padding: 1rem 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   position: sticky;
@@ -49,7 +49,7 @@ body {
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 25px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 123, 255, 0.2);
   transition: all 0.3s ease;
   font-weight: bold;
   text-transform: uppercase;
@@ -57,7 +57,7 @@ body {
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(0, 123, 255, 0.4);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -66,7 +66,7 @@ body {
 .main-content {
   flex: 1;
   padding: 2rem;
-  background: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') no-repeat center center fixed;
+  background: url('./assets/wwang_040522_86.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
 }
@@ -157,7 +157,97 @@ body {
 
 .form-group input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.5);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.deposits-table {
+  overflow-x: auto;
+}
+
+.deposits-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.deposits-table th,
+.deposits-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.deposits-table th {
+  background: rgba(0, 123, 255, 0.3);
+  font-weight: bold;
+  color: #fff;
+}
+
+.deposits-table td {
+  color: #fff;
+}
+
+.withdrawals-table {
+  overflow-x: auto;
+}
+
+.withdrawals-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.withdrawals-table th,
+.withdrawals-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.withdrawals-table th {
+  background: rgba(0, 123, 255, 0.3);
+  font-weight: bold;
+  color: #fff;
+}
+
+.withdrawals-table td {
+  color: #fff;
+}
+
+.status {
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.status.pending {
+  background: #ffc107;
+  color: #000;
+}
+
+.status.approved {
+  background: #28a745;
+  color: #fff;
+}
+
+.status.rejected {
+  background: #dc3545;
+  color: #fff;
+}
+
+.status-select {
+  padding: 0.3rem;
+  border: none;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 0.9rem;
 }
 
 /* Responsive design */
