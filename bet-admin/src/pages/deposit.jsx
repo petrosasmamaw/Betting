@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDeposits, updateDeposit } from '../Slices/depositSlice';
+import { fetchBalancesBySupabaseId, createBalance, updateBalance } from '../Slices/balanceSlice';
 
 const Deposit = () => {
   const dispatch = useDispatch();
@@ -10,8 +11,34 @@ const Deposit = () => {
     dispatch(fetchDeposits());
   }, [dispatch]);
 
-  const handleStatusChange = (id, newStatus) => {
-    dispatch(updateDeposit({ id, data: { status: newStatus } }));
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const deposit = deposits.find(d => d._id === id);
+      if (!deposit) return;
+
+      // Update deposit status first
+      await dispatch(updateDeposit({ id, data: { status: newStatus } })).unwrap();
+
+      // When status changes to approved, update/create balance for this supabaseId
+      if (newStatus === 'approved' && deposit.status !== 'approved') {
+        const balances = await dispatch(fetchBalancesBySupabaseId(deposit.supabaseId)).unwrap();
+
+        if (Array.isArray(balances) && balances.length > 0) {
+          const currentBalance = balances[0];
+          const newBalanceAmount = (currentBalance.balance || 0) + deposit.amount;
+
+          await dispatch(
+            updateBalance({ id: currentBalance._id || currentBalance.id, data: { balance: newBalanceAmount } })
+          ).unwrap();
+        } else {
+          await dispatch(
+            createBalance({ supabaseId: deposit.supabaseId, balance: deposit.amount })
+          ).unwrap();
+        }
+      }
+    } catch (err) {
+      console.error('Error updating deposit/balance:', err);
+    }
   };
 
   return (
