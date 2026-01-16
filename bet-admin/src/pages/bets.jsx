@@ -36,7 +36,8 @@ export default function Bets({ user }) {
 
   return (
     <div className="page">
-      <h1>All Bets</h1>
+      <h1 className="page-header">All <span>Bets</span></h1>
+      <p className="page-description">Manage all bets in the system.</p>
       {loading && <p>Loading...</p>}
       {error && <p className="error">{typeof error === 'string' ? error : error.message || 'Error'}</p>}
       <div className="bets-list">

@@ -33,8 +33,8 @@ const Profile = ({ user }) => {
 
   return (
     <div className="page">
-      <h1>Profile</h1>
-      <p>View your profile information here.</p>
+      <h1 className="page-header">My <span>Profile</span></h1>
+      <p className="page-description">View your profile information here.</p>
       {error && !error.includes('User not found') && !error.includes('not found') && (
         <p className="error">{typeof error === 'string' ? error : error.message || 'An error occurred'}</p>
       )}

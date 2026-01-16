@@ -32,8 +32,8 @@ const Deposit = ({ user }) => {
 
   return (
     <div className="page">
-      <h1>Deposit</h1>
-      <p>Make a deposit to your account.</p>
+      <h1 className="page-header">Deposit <span>Funds</span></h1>
+      <p className="page-description">Make a deposit to your account.</p>
       <form onSubmit={handleSubmit} className="deposit-form">
         <div className="form-group">
           <label htmlFor="phoneNo">Phone Number</label>

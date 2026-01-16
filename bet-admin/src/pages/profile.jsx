@@ -12,8 +12,8 @@ const Profile = () => {
 
   return (
     <div className="page">
-      <h1>User Profiles</h1>
-      <p>View all user profiles.</p>
+      <h1 className="page-header">User <span>Profiles</span></h1>
+      <p className="page-description">View all user profiles.</p>
       {error && <p className="error">{typeof error === 'string' ? error : error.message || 'An error occurred'}</p>}
       {loading ? (
         <p>Loading profiles...</p>

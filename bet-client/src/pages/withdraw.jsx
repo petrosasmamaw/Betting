@@ -35,8 +35,8 @@ const Withdraw = ({ user }) => {
 
   return (
     <div className="page">
-      <h1>Withdraw</h1>
-      <p>Request a withdrawal from your account.</p>
+      <h1 className="page-header">Withdraw <span>Funds</span></h1>
+      <p className="page-description">Request a withdrawal from your account.</p>
       <form onSubmit={handleSubmit} className="withdraw-form">
         <div className="form-group">
           <label htmlFor="userName">User Name</label>

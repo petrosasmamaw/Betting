@@ -18,7 +18,8 @@ const Register = () => {
 
   return (
     <div className="page">
-      <h1>Register</h1>
+      <h1 className="page-header">Admin <span>Register</span></h1>
+      <p className="page-description">Create an admin account.</p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>

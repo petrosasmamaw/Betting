@@ -94,7 +94,8 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <h1>Admin Dashboard</h1>
+      <h1 className="page-header">Admin <span>Dashboard</span></h1>
+      <p className="page-description">Overview of all system activities and statistics.</p>
 
       {/* Summary Cards */}
       <div className="summary-cards">

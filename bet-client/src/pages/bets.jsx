@@ -47,7 +47,8 @@ export default function Bets({ user }) {
 
   return (
     <div className="page">
-      <h1>My Bets</h1>
+      <h1 className="page-header">My <span>Bets</span></h1>
+      <p className="page-description">Manage and view your betting activities on this page.</p>
       <div className="create-bet">
         <h2>Create New Bet</h2>
         <form onSubmit={handleSubmit} className="bet-form">

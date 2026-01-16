@@ -23,7 +23,8 @@ const Login = () => {
 
   return (
     <div className="page">
-      <h1>Login</h1>
+      <h1 className="page-header">Login <span>Here</span></h1>
+      <p className="page-description">Access your account by logging in.</p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
