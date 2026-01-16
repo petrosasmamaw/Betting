@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -12,25 +13,25 @@ const Footer = () => {
           <div className="footer-column">
             <h3>Explore</h3>
             <ul>
-              <li><a href="/bets">My Bets</a></li>
-              <li><a href="/deposit">Deposit</a></li>
-              <li><a href="/withdraw">Withdraw</a></li>
+              <li><Link to="/bets">My Bets</Link></li>
+              <li><Link to="/deposit">Deposit</Link></li>
+              <li><Link to="/withdraw">Withdraw</Link></li>
             </ul>
           </div>
           <div className="footer-column">
             <h3>Support</h3>
             <ul>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">Responsible Gaming</a></li>
-              <li><a href="#">Contact Us</a></li>
+              <li><a href="https://support.skybet.com/app/answers/detail/football-rules-hub/">Help Center</a></li>
+              <li><a href="https://support.skybet.com/app/answers/detail/football-rules-hub/">Responsible Gaming</a></li>
+              <li><a href="https://support.skybet.com/app/answers/detail/football-rules-hub/">Contact Us</a></li>
             </ul>
           </div>
           <div className="footer-column">
             <h3>Follow</h3>
             <div className="footer-social">
-              <a href="#" aria-label="Facebook">Fb</a>
-              <a href="#" aria-label="X">X</a>
-              <a href="#" aria-label="Instagram">Ig</a>
+              <a href="https://www.facebook.com/" aria-label="Facebook">Fb</a>
+              <a href="https://twitter.com/" aria-label="X">X</a>
+              <a href="https://www.instagram.com/" aria-label="Instagram">Ig</a>
             </div>
           </div>
         </div>

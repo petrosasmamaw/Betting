@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -12,25 +13,24 @@ const Footer = () => {
           <div className="footer-column">
             <h3>Overview</h3>
             <ul>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/bets">Bets</a></li>
-              <li><a href="/deposit">Deposits</a></li>
+              <li><Link to="/dashboard">Dashboard</Link></li>
+              <li><Link to="/bets">Bets</Link></li>
+              <li><Link to="/deposit">Deposits</Link></li>
             </ul>
           </div>
           <div className="footer-column">
             <h3>Management</h3>
             <ul>
-              <li><a href="/withdraw">Withdrawals</a></li>
-              <li><a href="/profile">Users</a></li>
-              <li><a href="#">Reports</a></li>
+              <li><Link to="/withdraw">Withdrawals</Link></li>
+              <li><Link to="/profile">Users</Link></li>
             </ul>
           </div>
           <div className="footer-column">
             <h3>Links</h3>
             <div className="footer-social">
-              <a href="#">Docs</a>
-              <a href="#">Status</a>
-              <a href="#">Support</a>
+              <a href="https://support.skybet.com/app/answers/detail/football-rules-hub/">Docs</a>
+              <a href="https://support.skybet.com/app/answers/detail/football-rules-hub/">Status</a>
+              <a href="https://support.skybet.com/app/answers/detail/football-rules-hub/">Support</a>
             </div>
           </div>
         </div>
