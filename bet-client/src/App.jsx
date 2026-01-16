@@ -10,6 +10,7 @@ import Register from './pages/register';
 import Withdraw from './pages/withdraw';
 import Navbar from './pages/navbar';
 import Deposit from './pages/deposit';
+import Footer from './pages/footer';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const App = () => {
           )}
         </Routes>
       </main>
+            <Footer />
     </div>
   );
 };
