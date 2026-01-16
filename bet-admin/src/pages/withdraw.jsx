@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWithdrawals, updateWithdrawal } from '../Slices/withdrawalSlice';
+import { fetchBalancesBySupabaseId, updateBalance } from '../Slices/balanceSlice';
 
 const Withdraw = () => {
   const dispatch = useDispatch();
@@ -10,8 +11,37 @@ const Withdraw = () => {
     dispatch(fetchWithdrawals());
   }, [dispatch]);
 
-  const handleStatusChange = (id, newStatus) => {
-    dispatch(updateWithdrawal({ id, data: { status: newStatus } }));
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const withdrawal = withdrawals.find(w => w._id === id);
+      if (!withdrawal) return;
+
+      // If not approving, just update status
+      if (newStatus !== 'approved') {
+        await dispatch(updateWithdrawal({ id, data: { status: newStatus } })).unwrap();
+        return;
+      }
+
+      // For approval: check balance first
+      const balances = await dispatch(fetchBalancesBySupabaseId(withdrawal.supabaseId)).unwrap();
+      const currentBalanceObj = Array.isArray(balances) && balances.length > 0 ? balances[0] : null;
+      const currentAmount = currentBalanceObj?.balance || 0;
+
+      if (currentAmount < withdrawal.amount) {
+        alert('Balance is less than withdrawal amount. Cannot approve.');
+        return; // Do not update withdrawal status
+      }
+
+      // Sufficient balance: approve withdrawal and subtract from balance
+      await dispatch(updateWithdrawal({ id, data: { status: newStatus } })).unwrap();
+
+      const newBalanceAmount = currentAmount - withdrawal.amount;
+      await dispatch(
+        updateBalance({ id: currentBalanceObj._id || currentBalanceObj.id, data: { balance: newBalanceAmount } })
+      ).unwrap();
+    } catch (err) {
+      console.error('Error updating withdrawal/balance:', err);
+    }
   };
 
   return (
