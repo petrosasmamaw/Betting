@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../Slices/authSlice';
@@ -6,6 +6,7 @@ import { logout } from '../Slices/authSlice';
 const Navbar = ({ user }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await dispatch(logout());
@@ -15,7 +16,17 @@ const Navbar = ({ user }) => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">Secret Bet Admin</div>
-      <div className="navbar-links">
+      <button
+        className="navbar-toggle"
+        type="button"
+        aria-label="Toggle navigation"
+        onClick={() => setMenuOpen(prev => !prev)}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         {user ? (
           <>
             <Link to="/dashboard" className="nav-link">Dashboard</Link>
