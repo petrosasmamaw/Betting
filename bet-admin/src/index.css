@@ -387,6 +387,58 @@ body {
   color: #fff;
 }
 
+/* Responsive tables for deposits, withdrawals, profiles */
+@media (max-width: 1024px) {
+  .page {
+    max-width: 100%;
+  }
+
+  .deposits-table th,
+  .deposits-table td,
+  .withdrawals-table th,
+  .withdrawals-table td,
+  .profiles-table th,
+  .profiles-table td {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .deposits-table,
+  .withdrawals-table,
+  .profiles-table {
+    margin: 0 -0.5rem;
+  }
+
+  .deposits-table table,
+  .withdrawals-table table,
+  .profiles-table table {
+    font-size: 0.85rem;
+  }
+
+  .status-select {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .deposits-table th,
+  .deposits-table td,
+  .withdrawals-table th,
+  .withdrawals-table td,
+  .profiles-table th,
+  .profiles-table td {
+    padding: 0.5rem;
+  }
+
+  .deposits-table table,
+  .withdrawals-table table,
+  .profiles-table table {
+    min-width: 600px; /* keep columns readable; horizontal scroll handled by wrapper */
+  }
+}
+
 .dashboard {
   padding: 2rem;
   max-width: 1400px;

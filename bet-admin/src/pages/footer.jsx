@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <h2 className="footer-title">Bet<span>Admin</span></h2>
+          <h2 className="footer-title">Secret<span>Bet.Admin</span></h2>
           <p className="footer-tagline">Control center for users, bets, and transactions.</p>
         </div>
         <div className="footer-columns">
