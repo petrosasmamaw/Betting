@@ -404,38 +404,84 @@ body {
   }
 }
 
+/* Stack table rows into cards on small screens instead of horizontal scroll */
 @media (max-width: 768px) {
   .deposits-table,
   .withdrawals-table,
   .profiles-table {
-    margin: 0 -0.5rem;
+    overflow-x: visible;
+    margin: 0;
   }
 
   .deposits-table table,
   .withdrawals-table table,
   .profiles-table table {
-    font-size: 0.85rem;
+    width: 100%;
+    font-size: 0.9rem;
+    border: 0;
   }
+
+  .deposits-table thead,
+  .withdrawals-table thead,
+  .profiles-table thead {
+    display: none;
+  }
+
+  .deposits-table tbody tr,
+  .withdrawals-table tbody tr,
+  .profiles-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .deposits-table td,
+  .withdrawals-table td,
+  .profiles-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0;
+    border: 0;
+  }
+
+  .deposits-table td::before,
+  .withdrawals-table td::before,
+  .profiles-table td::before {
+    font-weight: 600;
+    margin-right: 0.75rem;
+    color: #fff;
+    opacity: 0.9;
+  }
+
+  /* Labels for deposits table */
+  .deposits-table td:nth-child(1)::before { content: 'Phone No'; }
+  .deposits-table td:nth-child(2)::before { content: 'Amount'; }
+  .deposits-table td:nth-child(3)::before { content: 'Method'; }
+  .deposits-table td:nth-child(4)::before { content: 'Status'; }
+  .deposits-table td:nth-child(5)::before { content: 'Date'; }
+  .deposits-table td:nth-child(6)::before { content: 'Actions'; }
+
+  /* Labels for withdrawals table */
+  .withdrawals-table td:nth-child(1)::before { content: 'User Name'; }
+  .withdrawals-table td:nth-child(2)::before { content: 'Phone No'; }
+  .withdrawals-table td:nth-child(3)::before { content: 'Method'; }
+  .withdrawals-table td:nth-child(4)::before { content: 'Amount'; }
+  .withdrawals-table td:nth-child(5)::before { content: 'Status'; }
+  .withdrawals-table td:nth-child(6)::before { content: 'Date'; }
+  .withdrawals-table td:nth-child(7)::before { content: 'Actions'; }
+
+  /* Labels for profiles table */
+  .profiles-table td:nth-child(1)::before { content: 'Email'; }
+  .profiles-table td:nth-child(2)::before { content: 'Role'; }
+  .profiles-table td:nth-child(3)::before { content: 'Balance'; }
+  .profiles-table td:nth-child(4)::before { content: 'Status'; }
+  .profiles-table td:nth-child(5)::before { content: 'Member Since'; }
 
   .status-select {
     width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .deposits-table th,
-  .deposits-table td,
-  .withdrawals-table th,
-  .withdrawals-table td,
-  .profiles-table th,
-  .profiles-table td {
-    padding: 0.5rem;
-  }
-
-  .deposits-table table,
-  .withdrawals-table table,
-  .profiles-table table {
-    min-width: 600px; /* keep columns readable; horizontal scroll handled by wrapper */
   }
 }
 
