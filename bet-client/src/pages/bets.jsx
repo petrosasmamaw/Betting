@@ -95,7 +95,7 @@ export default function Bets({ user }) {
               <p><strong>Amount:</strong> ${bet.amount}</p>
               <p><strong>Possible Win:</strong> ${bet.possibleWin}</p>
               <p><strong>Accepted:</strong> {bet.isAccepted ? 'Yes' : 'No'}</p>
-              <p><strong>Status:</strong> {bet.status}</p>
+              <p><strong>Status:</strong> {bet.status} {bet.status==='win' && `${bet.possibleWin} $ add to your balance 🎉`}</p>
               <p><strong>Created:</strong> {new Date(bet.createdAt).toLocaleDateString()}</p>
             </div>
           ))}
