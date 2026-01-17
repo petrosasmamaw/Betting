@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../apiConfig';
 
-const BASE_URL = 'http://localhost:5000/api'; 
+const BASE_URL = API_BASE_URL; 
 const BETS_URL = `${BASE_URL}/bets`;
 
 export const fetchBets = createAsyncThunk('bets/fetchAll', async (_, thunkAPI) => {
