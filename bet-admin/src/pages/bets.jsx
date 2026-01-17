@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBets, updateBet, deleteBet } from '../Slices/betSlice';
+import {
+  fetchBalancesBySupabaseId,
+  updateBalance,
+  createBalance,
+} from '../Slices/balanceSlice';
 
 export default function Bets({ user }) {
   const dispatch = useDispatch();
@@ -19,9 +24,47 @@ export default function Bets({ user }) {
     });
   };
 
-  const handleSave = (id) => {
-    dispatch(updateBet({ id, data: editData }));
-    setEditing(null);
+  const handleSave = async (id) => {
+    const bet = bets.find(b => (b._id || b.id) === id);
+    if (!bet) return;
+
+    const payload = {
+      ...editData,
+      possibleWin: Number(editData.possibleWin) || 0,
+    };
+
+    try {
+      const updatedBet = await dispatch(updateBet({ id, data: payload })).unwrap();
+
+      if (updatedBet.status === 'win' && updatedBet.possibleWin > 0 && updatedBet.supabaseId) {
+        const userId = updatedBet.supabaseId;
+
+        const balances = await dispatch(fetchBalancesBySupabaseId(userId)).unwrap();
+        const existingBalance = Array.isArray(balances) && balances.length > 0 ? balances[0] : null;
+        const currentBalance = existingBalance?.balance || 0;
+        const newBalanceAmount = currentBalance + updatedBet.possibleWin;
+
+        if (existingBalance) {
+          await dispatch(
+            updateBalance({
+              id: existingBalance._id || existingBalance.id,
+              data: { ...existingBalance, balance: newBalanceAmount },
+            })
+          ).unwrap();
+        } else {
+          await dispatch(
+            createBalance({
+              supabaseId: userId,
+              balance: newBalanceAmount,
+            })
+          ).unwrap();
+        }
+      }
+
+      setEditing(null);
+    } catch (err) {
+      console.error('Failed to save bet or update balance', err);
+    }
   };
 
   const handleCancel = () => {
