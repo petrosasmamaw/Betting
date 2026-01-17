@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <h2 className="footer-title">Bet<span>Zone</span></h2>
+          <h2 className="footer-title">Secret<span>BET.Zone</span></h2>
           <p className="footer-tagline">Smart bets, secure payouts, and real-time action.</p>
         </div>
         <div className="footer-columns">

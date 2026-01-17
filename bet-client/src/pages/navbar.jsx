@@ -22,7 +22,7 @@ const Navbar = ({ user }) => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">Bet Admin</div>
+      <div className="navbar-brand">Secret Bet</div>
       <div className="navbar-links">
         {user ? (
           <>
