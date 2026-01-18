@@ -18,8 +18,8 @@ const corsOptions = {
 	origin: [
 		'http://localhost:5173',
 		'http://localhost:5174',
-		'https://secret-bet-client.vercel.app/',
-		'https://secret-bet-admin.vercel.app/',
+		'https://secret-bet-client.vercel.app',
+		'https://secret-bet-admin.vercel.app',
 	],
 	credentials: true,
 };
