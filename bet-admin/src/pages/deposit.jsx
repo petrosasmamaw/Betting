@@ -64,7 +64,9 @@ const Deposit = () => {
               </tr>
             </thead>
             <tbody>
-              {deposits.map(deposit => (
+              {[...deposits]
+                .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+                .map(deposit => (
                 <tr key={deposit._id}>
                   <td>{deposit.phoneNo}</td>
                   <td>${deposit.amount}</td>

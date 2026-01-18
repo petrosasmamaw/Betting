@@ -68,7 +68,9 @@ const Withdraw = () => {
               </tr>
             </thead>
             <tbody>
-              {withdrawals.map(withdrawal => (
+              {[...withdrawals]
+                .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+                .map(withdrawal => (
                 <tr key={withdrawal._id}>
                   <td>{withdrawal.userName}</td>
                   <td>{withdrawal.phoneNo}</td>

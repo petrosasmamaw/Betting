@@ -89,7 +89,9 @@ export default function Bets({ user }) {
         {loading && <p>Loading...</p>}
         {bets.length === 0 && !loading && <p>No bets found.</p>}
         <div className="bets-grid">
-          {bets.map(bet => (
+          {[...bets]
+            .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+            .map(bet => (
             <div key={bet._id || bet.id} className="bet-item">
               <p><strong>Prediction:</strong> {bet.prediction}</p>
               <p><strong>Amount:</strong> ${bet.amount}</p>

@@ -116,7 +116,9 @@ export default function Bets({ user }) {
       {loading && <p>Loading...</p>}
       {error && <p className="error">{typeof error === 'string' ? error : error.message || 'Error'}</p>}
       <div className="bets-list">
-        {bets.map(bet => (
+        {[...bets]
+          .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+          .map(bet => (
           <div key={bet._id || bet.id} className="bet-item">
             <div className="bet-info">
               <p><strong>Prediction:</strong> {bet.prediction}</p>
@@ -124,7 +126,7 @@ export default function Bets({ user }) {
               <p><strong>Possible Win:</strong> ${bet.possibleWin}</p>
               <p><strong>Accepted:</strong> {bet.isAccepted ? 'Yes' : 'No'}</p>
               <p><strong>Status:</strong> {bet.status}</p>
-              <p><strong>User ID:</strong> {bet.supabaseId}</p>
+              <p><strong>User ID:</strong> {bet.supabaseId}</p> 
             </div>
             {editing === (bet._id || bet.id) ? (
               <div className="edit-form">

@@ -85,7 +85,9 @@ const Deposit = ({ user }) => {
         <p>No deposits found.</p>
       ) : (
         <div className="deposits-list">
-          {deposits.map(deposit => (
+          {[...deposits]
+            .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+            .map(deposit => (
             <div key={deposit._id} className="deposit-item">
               <p><strong>Phone:</strong> {deposit.phoneNo}</p>
               <p><strong>Amount:</strong> ${deposit.amount}</p>
