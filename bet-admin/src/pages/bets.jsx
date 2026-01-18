@@ -28,12 +28,44 @@ export default function Bets({ user }) {
     const bet = bets.find(b => (b._id || b.id) === id);
     if (!bet) return;
 
+    const isAccepting = !bet.isAccepted && editData.isAccepted;
+
     const payload = {
       ...editData,
       possibleWin: Number(editData.possibleWin) || 0,
     };
 
     try {
+      if (isAccepting && bet.supabaseId) {
+        const userId = bet.supabaseId;
+        const balances = await dispatch(fetchBalancesBySupabaseId(userId)).unwrap();
+        const existingBalance = Array.isArray(balances) && balances.length > 0 ? balances[0] : null;
+        const currentBalance = existingBalance?.balance || 0;
+
+        if (currentBalance < bet.amount) {
+          alert('Balance is less than bet amount. Cannot accept this bet.');
+          return;
+        }
+
+        const newBalanceAmount = currentBalance - bet.amount;
+
+        if (existingBalance) {
+          await dispatch(
+            updateBalance({
+              id: existingBalance._id || existingBalance.id,
+              data: { ...existingBalance, balance: newBalanceAmount },
+            })
+          ).unwrap();
+        } else {
+          await dispatch(
+            createBalance({
+              supabaseId: userId,
+              balance: newBalanceAmount,
+            })
+          ).unwrap();
+        }
+      }
+
       const updatedBet = await dispatch(updateBet({ id, data: payload })).unwrap();
 
       if (updatedBet.status === 'win' && updatedBet.possibleWin > 0 && updatedBet.supabaseId) {

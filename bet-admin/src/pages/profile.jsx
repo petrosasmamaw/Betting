@@ -1,14 +1,32 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../Slices/userSlice';
+import { fetchBalances } from '../Slices/balanceSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { items: users, loading, error } = useSelector(state => state.users);
+  const { items: balances } = useSelector(state => state.balances);
 
   useEffect(() => {
     dispatch(fetchUsers());
+    dispatch(fetchBalances());
   }, [dispatch]);
+
+  const getUserBalance = (supabaseId) => {
+    if (!supabaseId) return 0;
+
+    const userBalances = balances.filter(b => b.supabaseId === supabaseId);
+    if (userBalances.length === 0) return 0;
+
+    const latest = userBalances.reduce((latestItem, currentItem) => {
+      const latestDate = new Date(latestItem.updatedAt || latestItem.createdAt || 0);
+      const currentDate = new Date(currentItem.updatedAt || currentItem.createdAt || 0);
+      return currentDate > latestDate ? currentItem : latestItem;
+    });
+
+    return typeof latest.balance === 'number' ? latest.balance : 0;
+  };
 
   return (
     <div className="page">
@@ -36,7 +54,7 @@ const Profile = () => {
                 <tr key={user._id}>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
-                  <td>${user.balance}</td>
+                  <td>${getUserBalance(user.supabaseId)}</td>
                   <td>
                     <span className={user.isBlocked ? 'blocked' : 'active'}>
                       {user.isBlocked ? 'Blocked' : 'Active'}
