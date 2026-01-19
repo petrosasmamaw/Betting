@@ -7,8 +7,14 @@ const BetSchema = new mongoose.Schema(
       required: true,
     },
 
-    prediction: {
-      type: String,
+    images: {
+      type: [String],
+      validate: {
+        validator: function (arr) {
+          return Array.isArray(arr) && arr.length >= 1 && arr.length <= 5;
+        },
+        message: "You must upload between 1 and 5 images.",
+      },
       required: true,
     },
 
