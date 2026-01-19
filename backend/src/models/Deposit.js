@@ -10,6 +10,9 @@ const DepositSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    image: {
+      type: String,
+    },
     amount: {
       type: Number,
       required: true,
