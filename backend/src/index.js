@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import dns from 'dns';
 
 import usersRoute from './routes/usersRoute.js';
 import betsRoute from './routes/betsRoute.js';
@@ -9,8 +10,11 @@ import depositsRoute from './routes/depositsRoute.js';
 import withdrawalsRoute from './routes/withdrawalsRoute.js';
 import balancesRoute from './routes/balancesRoute.js';
 import authRoute from './routes/authRouter.js';
+import footballRoute from './routes/footballRoute.js';
 
 dotenv.config();
+
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -37,6 +41,7 @@ app.use('/api/deposits', depositsRoute);
 app.use('/api/withdrawals', withdrawalsRoute);
 app.use('/api/balances', balancesRoute);
 app.use('/api/auth', authRoute);
+app.use('/api/football', footballRoute);
 
 const mongoUri =  process.env.MONGO_URI ;
 
