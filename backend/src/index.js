@@ -10,8 +10,6 @@ import depositsRoute from './routes/depositsRoute.js';
 import withdrawalsRoute from './routes/withdrawalsRoute.js';
 import balancesRoute from './routes/balancesRoute.js';
 import authRoute from './routes/authRouter.js';
-import footballRoute from './routes/footballRoute.js';
-
 dotenv.config();
 
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
@@ -41,7 +39,7 @@ app.use('/api/deposits', depositsRoute);
 app.use('/api/withdrawals', withdrawalsRoute);
 app.use('/api/balances', balancesRoute);
 app.use('/api/auth', authRoute);
-app.use('/api/football', footballRoute);
+
 
 const mongoUri =  process.env.MONGO_URI ;
 
