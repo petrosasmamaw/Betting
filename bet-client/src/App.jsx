@@ -26,6 +26,7 @@ const App = () => {
       <Navbar user={user} />
       <main className="main-content">
         <Routes>
+          <Route path="/football" element={<Football user={user} />} />
           {user ? (
             <>
               <Route path="/" element={<Bets user={user} />} />

@@ -16,7 +16,7 @@ const store = configureStore({
         bets: betReducer,
         withdrawals: withdrawalReducer,
         balances: balanceReducer,
-            football: footballReducer,
+        football: footballReducer,
     },
 });
     
