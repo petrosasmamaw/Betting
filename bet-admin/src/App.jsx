@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSession } from './Slices/authSlice';
+import { getSession } from './Slices/authSlice';1
 import Dashboard from './pages/dashboard';
 import Bets from './pages/bets';
 import Login from './pages/login';
